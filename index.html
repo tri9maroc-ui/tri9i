@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ar-MA">
+<html lang="ar-MA" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TRi9i – Smsar dyal n-n9l</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&display=swap" rel="stylesheet">
+<title>TRi9i – سمسار النقل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--tx:#14231c;--mut:#5d6b64;--bd:#e3dfd5;--ot:#fdeedd;--bt:#e4ebf8;--gt:#e1f3e6;--blue:#1d3f8f;--orange:#d9640f;--green:#15803d;color-scheme:light}
 @media (prefers-color-scheme:dark){:root{--bg:#10171a;--card:#1a2427;--tx:#eef3ef;--mut:#9fb0a8;--bd:#2c3a3d;--ot:#3a2412;--bt:#182646;--gt:#12301d;--blue:#7fa2f0;--orange:#fb923c;--green:#4ade80;color-scheme:dark}}
-body{background:var(--bg);color:var(--tx);font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;min-height:100vh}
+body{background:var(--bg);color:var(--tx);font-family:'Cairo',system-ui,-apple-system,'Segoe UI',sans-serif;min-height:100vh}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:18px}.mut{color:var(--mut)}
 .inp{width:100%;background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:15px;font-size:18px;color:var(--tx);outline:none}
 .inp:focus{border-color:var(--blue)}
@@ -20,14 +20,15 @@ button:focus-visible,.inp:focus-visible,a:focus-visible{outline:3px solid var(--
 .g{background:#15803d}.b{background:#1d3f8f}.o{background:#d9640f}.tg{background:var(--gt)}.to{background:var(--ot)}.tb{background:var(--bt)}
 .cb{color:var(--blue)}.co{color:var(--orange)}.cg{color:var(--green)}
 .road{flex:1;border-top:4px dashed var(--bd);position:relative;margin:0 10px;min-width:30px}
-.road svg{position:absolute;left:50%;top:-14px;transform:translateX(-50%);background:var(--card);padding:0 4px}
-.row{display:block;width:100%;text-align:left;cursor:pointer}.pill{font-size:13px;font-weight:700;padding:4px 12px;border-radius:99px;display:inline-block}
+.road svg{position:absolute;left:50%;top:-14px;transform:translateX(-50%) scaleX(-1);background:var(--card);padding:0 4px}
+.row{display:block;width:100%;text-align:start;cursor:pointer}input[type=tel],input[type=number],input[type=password]{direction:ltr}
+.pill{font-size:13px;font-weight:700;padding:4px 12px;border-radius:99px;display:inline-block}
 </style>
 </head>
 <body>
 <div class="max-w-md mx-auto px-4 pb-16">
  <header class="flex items-center justify-between py-4 gap-2">
-  <button id="logo" class="flex items-center gap-2 text-left" aria-label="TRi9i"><span class="w-11 h-11 rounded-2xl flex items-center justify-center text-white" style="background:#15803d" id="logoic"></span><span><span class="block text-2xl font-extrabold leading-none">TRi9i</span><span class="block text-xs mut">Smsar dyal n-n9l</span></span></button>
+  <button id="logo" class="flex items-center gap-2 text-start" aria-label="TRi9i"><span class="w-11 h-11 rounded-2xl flex items-center justify-center text-white" style="background:#15803d" id="logoic"></span><span><span class="block text-2xl font-extrabold leading-none">TRi9i</span><span class="block text-xs mut">سمسار النقل</span></span></button>
   <div id="who" class="flex items-center gap-2"></div>
  </header>
  <main id="app" aria-live="polite"></main>
@@ -41,105 +42,105 @@ const FEE=0.10;
 /* ========================== */
 const sb=supabase.createClient(CFG.url,CFG.key);
 const S={view:'auth',me:null,sel:null,chatWith:null,mode:'login',pick:'shipper',method:'cash'};
-const P={user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',cam:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',truck:'<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',box:'<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',back:'<path d="m15 18-6-6 6-6"/>',check:'<path d="M20 6 9 17l-5-5"/>',phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',plus:'<path d="M12 5v14M5 12h14"/>',bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/>',chat:'<path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z"/>',out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',pin:'<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>'};
+const P={user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',cam:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',truck:'<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',box:'<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',back:'<path d="m9 18 6-6-6-6"/>',check:'<path d="M20 6 9 17l-5-5"/>',phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',plus:'<path d="M12 5v14M5 12h14"/>',bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/>',chat:'<path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2-5.4A8.4 8.4 0 1 1 21 11.5z"/>',out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',pin:'<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>'};
 const ic=(n,s=24)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
 document.getElementById('logoic').innerHTML=ic('truck',26);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const dh=n=>Number(n).toLocaleString('fr-FR')+' DH';
+const dh=n=>Number(n).toLocaleString('fr-FR')+' درهم';
 const $=document.getElementById('app');
 const toast=(t,ok)=>{const m=document.getElementById('msg');m.style.background=ok?'#15803d':'#b91c1c';m.textContent=t;m.classList.remove('hidden');setTimeout(()=>m.classList.add('hidden'),4500)};
 const q=async p=>{const {data,error}=await p;if(error){toast(error.message);throw error}return data};
 const route=(a,b,z='text-2xl')=>`<div class="flex items-center ${z} font-extrabold"><span>${esc(a)}</span><span class="road">${ic('truck',22)}</span><span>${esc(b)}</span></div>`;
 const home=()=>({shipper:'sh',driver:'dr',admin:'admin'}[S.me.role]);
-const back=to=>`<button class="flex items-center gap-1 font-bold cb py-3 min-h-[48px]" data-go="${to}">${ic('back')}Rjou3</button>`;
+const back=to=>`<button class="flex items-center gap-1 font-bold cb py-3 min-h-[48px]" data-go="${to}">${ic('back')}رجع</button>`;
 const field=(id,l,ph,t='text',x='')=>`<label class="block"><span class="font-bold block mb-1.5">${l}</span><input id="${id}" type="${t}" class="inp" placeholder="${ph}" ${x}></label>`;
-const ST={open:['Mftou7a','tb cb'],agreed:['Tfa9ou, bqa t-tkhlas','to co'],paying:['Kan-checkiw t-tahwil','to co'],paid:['Mkhlsa, f t-tri9','tg cg'],delivered:['Twsslat, tsenna t-ta2kid','to co'],closed:['Mtamma','tg cg']};
+const ST={open:['مفتوحة','tb cb'],agreed:['تفاهمو، بقى التخلاص','to co'],paying:['كنتأكدو من التحويل','to co'],paid:['مخلصة، فالطريق','tg cg'],delivered:['وصلات، تسنى التأكيد','to co'],closed:['سالات','tg cg']};
 const pill=s=>`<span class="pill ${ST[s][1]}">${ST[s][0]}</span>`;
-const STEPS=['Ttafa9na','Tkhlless','Twsslat','Tssaft l-flous'],IDX={agreed:0,paying:0,paid:1,delivered:2,closed:3};
+const STEPS=['تفاهمنا','تخلص','وصلات','تصيفطو الفلوس'],IDX={agreed:0,paying:0,paid:1,delivered:2,closed:3};
 const track=s=>{const k=IDX[s];return `<div class="grid grid-cols-4 gap-1 text-center mt-2">${STEPS.map((t,i)=>`<div><div class="mx-auto w-9 h-9 rounded-full flex items-center justify-center font-bold ${i<=k?'text-white':'mut'}" style="background:${i<=k?'#15803d':'var(--bd)'}">${i<=k?ic('check',18):i+1}</div><p class="text-xs mt-1 ${i<=k?'font-bold':'mut'}">${t}</p></div>`).join('')}</div>`};
 const card=(r,tag)=>`<button class="row card p-4" data-open="${r.id}"><div class="flex justify-between items-center mb-2">${pill(r.status)}<span class="font-extrabold co">${tag}</span></div>${route(r.from_city,r.to_city,'text-xl')}<p class="mut mt-2 text-[15px]">${esc(r.what)}</p></button>`;
 const em=p=>p.replace(/\D/g,'')+'@tri9i.app';
 
 const V={
 auth(){const su=S.mode==='signup',d=S.pick==='driver';
- return `<div><h1 class="text-4xl font-extrabold leading-tight mt-2">Kol n-n9l f blasa wahda.</h1><p class="mut text-lg mt-2">TRi9i howa s-smsar binkom: tfawdo, tkhlsso w tsaftou f amane.</p>
- <div class="grid grid-cols-2 gap-2 mt-5"><button class="btn sm ${su?'tb cb':'b'}" data-mode="login">Dkhol</button><button class="btn sm ${su?'b':'tb cb'}" data-mode="signup">Compte jdid</button></div>
- ${su?`<div class="grid grid-cols-2 gap-3 mt-4"><button class="card p-4 text-left" style="${!d?'border:3px solid #d9640f':'opacity:.65'}" data-pick="shipper"><span class="co">${ic('box',30)}</span><b class="block mt-2 text-lg">3ndi sel3a</b></button><button class="card p-4 text-left" style="${d?'border:3px solid #1d3f8f':'opacity:.65'}" data-pick="driver"><span class="cb">${ic('truck',30)}</span><b class="block mt-2 text-lg">3ndi camion</b></button></div>`:''}
- <div class="grid gap-4 mt-4">${su?field('a-name','Smitek','Smiya kamla'):''}${field('a-phone','Numro dyal t-telifon','06 12 34 56 78','tel')}${field('a-pass','Kelmat s-sirr','3la l-a9al 6 7rouf','password')}
- ${su&&d?`<label class="block"><span class="font-bold block mb-1.5">Noo3 d-camion</span><select id="a-truck" class="inp"><option>Camionnette 3,5 t</option><option>Camion 8 t</option><option>Camion 10 t</option><option>Semi-remorque 25 t</option><option>Camion frigo</option></select></label>`:''}
- <button class="btn g" data-act="${su?'signup':'login'}">${su?'Sajjel':'Dkhol'}</button></div></div>`},
+ return `<div><h1 class="text-4xl font-extrabold leading-tight mt-2">كل النقل فبلاصة وحدة.</h1><p class="mut text-lg mt-2">TRi9i هو السمسار بيناتكم: تفاهمو، خلصو وصيفطو فأمان.</p>
+ <div class="grid grid-cols-2 gap-2 mt-5"><button class="btn sm ${su?'tb cb':'b'}" data-mode="login">دخل</button><button class="btn sm ${su?'b':'tb cb'}" data-mode="signup">حساب جديد</button></div>
+ ${su?`<div class="grid grid-cols-2 gap-3 mt-4"><button class="card p-4 text-start" style="${!d?'border:3px solid #d9640f':'opacity:.65'}" data-pick="shipper"><span class="co">${ic('box',30)}</span><b class="block mt-2 text-lg">عندي سلعة</b></button><button class="card p-4 text-start" style="${d?'border:3px solid #1d3f8f':'opacity:.65'}" data-pick="driver"><span class="cb">${ic('truck',30)}</span><b class="block mt-2 text-lg">عندي كاميو</b></button></div>`:''}
+ <div class="grid gap-4 mt-4">${su?field('a-name','سميتك','السمية كاملة'):''}${field('a-phone','نمرة التيليفون','06 12 34 56 78','tel')}${field('a-pass','كلمة السر','على الأقل 6 حروف','password')}
+ ${su&&d?`<label class="block"><span class="font-bold block mb-1.5">نوع الكاميو</span><select id="a-truck" class="inp"><option>Camionnette 3,5 t</option><option>Camion 8 t</option><option>Camion 10 t</option><option>Semi-remorque 25 t</option><option>Camion frigo</option></select></label>`:''}
+ <button class="btn g" data-act="${su?'signup':'login'}">${su?'سجل':'دخل'}</button></div></div>`},
 
 async sh(){const L=await q(sb.from('requests').select('*').eq('shipper_id',S.me.id).order('created_at',{ascending:false}));
  const O=L.length?await q(sb.from('offers').select('request_id').eq('by_role','driver').in('request_id',L.map(r=>r.id))):[];
- return `<div><h1 class="text-3xl font-extrabold mt-1">Salam ${esc(S.me.name.split(' ')[0])}</h1><button class="btn o mt-4" data-go="new">${ic('plus')}Tlab jdid</button><h2 class="text-xl font-extrabold mt-7 mb-3">Tlabat dyali</h2>
- ${L.length?`<div class="grid gap-3">${L.map(r=>card(r,O.filter(o=>o.request_id===r.id).length+' 3orod')).join('')}</div>`:'<div class="card p-6 text-center mut">Mazal ma 3ndek hta tlab.</div>'}</div>`},
+ return `<div><h1 class="text-3xl font-extrabold mt-1">سلام ${esc(S.me.name.split(' ')[0])}</h1><button class="btn o mt-4" data-go="new">${ic('plus')}طلب جديد</button><h2 class="text-xl font-extrabold mt-7 mb-3">الطلبات ديالي</h2>
+ ${L.length?`<div class="grid gap-3">${L.map(r=>card(r,O.filter(o=>o.request_id===r.id).length+' عروض')).join('')}</div>`:'<div class="card p-6 text-center mut">مازال ماعندك حتى طلب.</div>'}</div>`},
 
-new(){return `<div>${back('sh')}<h1 class="text-3xl font-extrabold">Tlab n-n9l jdid</h1><p class="mut mb-5">Ssewwa9a ghadi isiftou lik 3orod.</p><div class="grid gap-4">
- ${field('n-from','Mnin','Casablanca')}${field('n-to','L-win','Marrakech')}
- <label class="block"><span class="font-bold block mb-1.5">Achno hiya sel3a</span><textarea id="n-what" rows="3" class="inp" placeholder="Noo3, l-kmiya, t-tqel"></textarea></label>
- ${field('n-bud','Taman li kat-tsawwar (DH)','800','number','inputmode="numeric"')}${field('n-addr','3enwan t-tehmil (ma ghaybanch hta t-tkhlas)','Zone industrielle, hangar 4')}
- <button class="btn o" data-act="publish">Nchar t-tlab</button></div></div>`},
+new(){return `<div>${back('sh')}<h1 class="text-3xl font-extrabold">طلب نقل جديد</h1><p class="mut mb-5">السواقة غادي يصيفطو ليك عروض.</p><div class="grid gap-4">
+ ${field('n-from','من فين','الدار البيضاء')}${field('n-to','فين غادي','مراكش')}
+ <label class="block"><span class="font-bold block mb-1.5">شنو هي السلعة</span><textarea id="n-what" rows="3" class="inp" placeholder="النوع، الكمية، التقل"></textarea></label>
+ ${field('n-bud','الثمن لي كتصور (درهم)','800','number','inputmode="numeric"')}${field('n-addr','عنوان التحميل (ما غيبانش حتى التخلاص)','المنطقة الصناعية، هنكار 4')}
+ <button class="btn o" data-act="publish">نشر الطلب</button></div></div>`},
 
 async dr(){const open=await q(sb.from('requests').select('*').eq('status','open').order('created_at',{ascending:false})),trips=await q(sb.from('requests').select('*').eq('agreed_driver',S.me.id));
- return `<div><h1 class="text-3xl font-extrabold mt-1">Salam ${esc(S.me.name.split(' ')[0])}</h1><p class="mut">${esc(S.me.truck)}</p>
- ${trips.length?`<h2 class="text-xl font-extrabold mt-6 mb-3">Rihlati</h2><div class="grid gap-3">${trips.map(r=>card(r,dh(r.agreed_price))).join('')}</div>`:''}
- <h2 class="text-xl font-extrabold mt-7 mb-3">Sel3a li kat-tsenna chaffeur</h2>${open.length?`<div class="grid gap-3">${open.map(r=>card(r,'Budget '+dh(r.budget))).join('')}</div>`:'<div class="card p-6 text-center mut">Ma kayn hta tlab db.</div>'}</div>`},
+ return `<div><h1 class="text-3xl font-extrabold mt-1">سلام ${esc(S.me.name.split(' ')[0])}</h1><p class="mut">${esc(S.me.truck)}</p>
+ ${trips.length?`<h2 class="text-xl font-extrabold mt-6 mb-3">رحلاتي</h2><div class="grid gap-3">${trips.map(r=>card(r,dh(r.agreed_price))).join('')}</div>`:''}
+ <h2 class="text-xl font-extrabold mt-7 mb-3">سلع كتسنى شوفور</h2>${open.length?`<div class="grid gap-3">${open.map(r=>card(r,'الميزانية '+dh(r.budget))).join('')}</div>`:'<div class="card p-6 text-center mut">ما كاين حتى طلب دابا.</div>'}</div>`},
 
 async req(){const r=await q(sb.from('requests').select('*,drv:agreed_driver(name,truck)').eq('id',S.sel).single()),sh=S.me.role==='shipper',me=S.me.id;
  const O=await q(sb.from('offers').select('*,d:driver_id(name,truck,plate,capacity,city,avatar,truck_photos,verified)').eq('request_id',r.id).order('created_at'));RT=await rates(O.map(o=>o.driver_id));let b='';
  if(r.status==='open'){
-  if(sh){b=`<h2 class="text-xl font-extrabold mt-6 mb-3">3orod</h2><div class="grid gap-3">`+(O.map(o=>o.by_role==='driver'?`<div class="card p-4"><div class="flex justify-between items-start">${dinfo(o.d,o.driver_id)}<span class="text-2xl font-extrabold co">${dh(o.price)}</span></div>
-   <div class="flex gap-2 mt-3"><input id="c-${o.id}" type="number" inputmode="numeric" class="inp" style="padding:10px" placeholder="Taman jdid"><button class="btn b sm" style="width:auto;padding:0 14px" data-act="counter" data-d="${o.driver_id}" data-o="${o.id}">3ard</button></div>
-   <button class="btn g sm mt-2" data-act="accept" data-o="${o.id}">${ic('check',20)}Qbel ${dh(o.price)}</button><button class="btn b sm mt-2" data-act="openchat" data-d="${o.driver_id}">${ic('chat',20)}Hder m3a ${esc(o.d.name.split(' ')[0])}</button></div>`:`<div class="card p-3 tb text-sm" style="border:0">Nta 3ardti ${dh(o.price)} l ${esc(o.d.name)}.</div>`).join('')||'<div class="card p-5 mut text-center">Mazal ma jat 3orod.</div>')+'</div>';}
-  else{b=`<div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">Sift l-3ard dyalek</h2><div class="flex gap-2"><input id="o-price" type="number" inputmode="numeric" class="inp" value="${r.budget}"><button class="btn g sm" style="width:auto;padding:0 18px" data-act="offer">Sift</button></div><button class="btn b sm mt-3" data-act="openchat" data-d="${me}">${ic('chat',20)}Hder m3a l-client</button></div>`+
-   (O.length?`<h2 class="text-xl font-extrabold mt-6 mb-3">L-mofawadat</h2><div class="grid gap-3">${O.map(o=>o.by_role==='driver'?`<div class="card p-3 tb text-sm" style="border:0">Nta 3ardti ${dh(o.price)}. Tsenna jawab.</div>`:`<div class="card p-4"><b>L-client 3ardlek ${dh(o.price)}</b><button class="btn g sm mt-3" data-act="accept" data-o="${o.id}">${ic('check',20)}Qbel ${dh(o.price)}</button></div>`).join('')}</div>`:'');}
+  if(sh){b=`<h2 class="text-xl font-extrabold mt-6 mb-3">العروض</h2><div class="grid gap-3">`+(O.map(o=>o.by_role==='driver'?`<div class="card p-4"><div class="flex justify-between items-start">${dinfo(o.d,o.driver_id)}<span class="text-2xl font-extrabold co">${dh(o.price)}</span></div>
+   <div class="flex gap-2 mt-3"><input id="c-${o.id}" type="number" inputmode="numeric" class="inp" style="padding:10px" placeholder="ثمن جديد"><button class="btn b sm" style="width:auto;padding:0 14px" data-act="counter" data-d="${o.driver_id}" data-o="${o.id}">ثمن آخر</button></div>
+   <button class="btn g sm mt-2" data-act="accept" data-o="${o.id}">${ic('check',20)}قبل ${dh(o.price)}</button><button class="btn b sm mt-2" data-act="openchat" data-d="${o.driver_id}">${ic('chat',20)}هضر مع ${esc(o.d.name.split(' ')[0])}</button></div>`:`<div class="card p-3 tb text-sm" style="border:0">نتا عرضتي ${dh(o.price)} ل ${esc(o.d.name)}.</div>`).join('')||'<div class="card p-5 mut text-center">مازال ماجاو عروض.</div>')+'</div>';}
+  else{b=`<div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">صيفط العرض ديالك</h2><div class="flex gap-2"><input id="o-price" type="number" inputmode="numeric" class="inp" value="${r.budget}"><button class="btn g sm" style="width:auto;padding:0 18px" data-act="offer">صيفط</button></div><button class="btn b sm mt-3" data-act="openchat" data-d="${me}">${ic('chat',20)}هضر مع الكليان</button></div>`+
+   (O.length?`<h2 class="text-xl font-extrabold mt-6 mb-3">المفاوضات</h2><div class="grid gap-3">${O.map(o=>o.by_role==='driver'?`<div class="card p-3 tb text-sm" style="border:0">نتا عرضتي ${dh(o.price)}. تسنى الجواب.</div>`:`<div class="card p-4"><b>الكليان عرض ليك ${dh(o.price)}</b><button class="btn g sm mt-3" data-act="accept" data-o="${o.id}">${ic('check',20)}قبل ${dh(o.price)}</button></div>`).join('')}</div>`:'');}
  }else{
-  b=`<div class="card p-5 mt-4"><h2 class="font-extrabold text-lg">Hala d-rihla</h2>${track(r.status)}</div><div class="card p-5 mt-4"><p class="mut text-sm">Taman li tfa9ou 3lih</p><p class="text-3xl font-extrabold cg">${dh(r.agreed_price)}</p><p class="mut text-sm mt-1">Chaffeur: ${esc(r.drv?.name)}</p><button class="btn b sm mt-3" data-act="openchat" data-d="${r.agreed_driver}">${ic('chat',20)}Hder</button></div>`;
-  if(['agreed','paying'].includes(r.status))b+=`<div class="card p-4 mt-4 flex gap-3 items-start to" style="border:0"><span class="co">${ic('lock',26)}</span><p class="text-[15px]"><b>Numro t-telifon w l-3enwan mqfoulin.</b> Kayt-fte7o mnin n-nta2ij t-tkhlas.</p></div>`;
-  if(r.status==='agreed'&&sh)b+=`<button class="btn g mt-4" data-go="pay">${ic('lock')}Khlles db bach tconfirmi</button>`;
-  if(r.status==='paying')b+=`<p class="mut text-center mt-4">${sh?'Ila sifti t-tahwil, ghadi n-akkdo f d9ayeq.':'Tsenna TRi9i y-akked t-khlas.'}</p>`;
+  b=`<div class="card p-5 mt-4"><h2 class="font-extrabold text-lg">حالة الرحلة</h2>${track(r.status)}</div><div class="card p-5 mt-4"><p class="mut text-sm">الثمن لي تفاهمتو عليه</p><p class="text-3xl font-extrabold cg">${dh(r.agreed_price)}</p><p class="mut text-sm mt-1">الشوفور: ${esc(r.drv?.name)}</p><button class="btn b sm mt-3" data-act="openchat" data-d="${r.agreed_driver}">${ic('chat',20)}هضر</button></div>`;
+  if(['agreed','paying'].includes(r.status))b+=`<div class="card p-4 mt-4 flex gap-3 items-start to" style="border:0"><span class="co">${ic('lock',26)}</span><p class="text-[15px]"><b>نمرة التيليفون والعنوان مقفولين.</b> كيتفتحو من كيوصل التخلاص.</p></div>`;
+  if(r.status==='agreed'&&sh)b+=`<button class="btn g mt-4" data-go="pay">${ic('lock')}خلص دابا باش تأكد</button>`;
+  if(r.status==='paying')b+=`<p class="mut text-center mt-4">${sh?'إلا صيفطتي التحويل، غادي نأكدو فدقايق.':'تسنى TRi9i يأكد التخلاص.'}</p>`;
   if(['paid','delivered','closed'].includes(r.status)){const c=await q(sb.rpc('get_contact',{rid:r.id}));
-   b+=`<div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">${sh?'Tfasil l-chaffeur':'Tfasil t-tehmil'}</h2><p class="font-bold">${esc(c.name)}</p>${c.addr?`<p class="flex gap-2 items-start mt-2">${ic('pin',22)}<b>${esc(c.addr)}</b></p>`:''}<a class="btn g sm mt-3" href="tel:${esc(c.phone)}">${ic('phone',20)}Ssel ${esc(c.phone)}</a></div>`;}
-  if(r.status==='paid'&&!sh)b+=`<button class="btn b mt-4" data-act="deliver">${ic('check')}Wsslt l-sel3a</button>`;
-  if(r.status==='delivered'&&sh)b+=`<button class="btn g mt-4" data-act="confirm">${ic('check')}Wsslat, sift l-flous l-chaffeur</button>`;
-  if(r.status==='delivered'&&!sh)b+=`<p class="mut text-center mt-4">Tsenna l-client yakked l-istilam.</p>`;
-  if(r.status==='closed'&&sh){const rv=await q(sb.from('reviews').select('stars').eq('request_id',r.id));b+=rv.length?`<div class="card p-4 mt-4 text-center">Qiyyemti s-sewwa9: <b class="co">${'\u2605'.repeat(rv[0].stars)}</b></div>`:`<div class="card p-5 mt-4"><h2 class="font-extrabold mb-3 text-center">Kifach kant r-rihla?</h2><div class="grid grid-cols-5 gap-2">${[1,2,3,4,5].map(n=>`<button class="btn o sm" style="padding:0" data-act="rate" data-s="${n}" aria-label="${n} njoum">${n}\u2605</button>`).join('')}</div></div>`}
-  if(r.status==='closed')b+=`<div class="card p-5 mt-4 tg" style="border:0"><b>${sh?'Rihla mtamma. Chokran!':'Ghadi itssaft lik '+dh(Math.round(r.agreed_price*(1-FEE)))+' men ba3d l-commission.'}</b></div>`;
+   b+=`<div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">${sh?'معلومات الشوفور':'معلومات التحميل'}</h2><p class="font-bold">${esc(c.name)}</p>${c.addr?`<p class="flex gap-2 items-start mt-2">${ic('pin',22)}<b>${esc(c.addr)}</b></p>`:''}<a class="btn g sm mt-3" href="tel:${esc(c.phone)}">${ic('phone',20)}تصل ب ${esc(c.phone)}</a></div>`;}
+  if(r.status==='paid'&&!sh)b+=`<button class="btn b mt-4" data-act="deliver">${ic('check')}وصلت السلعة</button>`;
+  if(r.status==='delivered'&&sh)b+=`<button class="btn g mt-4" data-act="confirm">${ic('check')}وصلات، صيفط الفلوس للشوفور</button>`;
+  if(r.status==='delivered'&&!sh)b+=`<p class="mut text-center mt-4">تسنى الكليان يأكد الاستلام.</p>`;
+  if(r.status==='closed'&&sh){const rv=await q(sb.from('reviews').select('stars').eq('request_id',r.id));b+=rv.length?`<div class="card p-4 mt-4 text-center">تقييمك للشوفور: <b class="co">${'\u2605'.repeat(rv[0].stars)}</b></div>`:`<div class="card p-5 mt-4"><h2 class="font-extrabold mb-3 text-center">كيفاش كانت الرحلة؟</h2><div class="grid grid-cols-5 gap-2">${[1,2,3,4,5].map(n=>`<button class="btn o sm" style="padding:0" data-act="rate" data-s="${n}" aria-label="${n} نجوم">${n}\u2605</button>`).join('')}</div></div>`}
+  if(r.status==='closed')b+=`<div class="card p-5 mt-4 tg" style="border:0"><b>${sh?'الرحلة سالات. شكرا!':'غادي تصيفط ليك '+dh(Math.round(r.agreed_price*(1-FEE)))+' من بعد الكوميسيون.'}</b></div>`;
  }
- return `<div>${back(home())}<div class="card p-5"><div class="flex justify-between items-center mb-3">${pill(r.status)}<span class="mut text-sm">#${r.id}</span></div>${route(r.from_city,r.to_city)}<p class="text-lg mt-3">${esc(r.what)}</p><p class="mt-3 mut">Budget: <b class="co">${dh(r.budget)}</b></p></div>${b}</div>`},
+ return `<div>${back(home())}<div class="card p-5"><div class="flex justify-between items-center mb-3">${pill(r.status)}<span class="mut text-sm">#${r.id}</span></div>${route(r.from_city,r.to_city)}<p class="text-lg mt-3">${esc(r.what)}</p><p class="mt-3 mut">الميزانية: <b class="co">${dh(r.budget)}</b></p></div>${b}</div>`},
 
 async pay(){const r=await q(sb.from('requests').select('*').eq('id',S.sel).single()),p=r.agreed_price,f=Math.round(p*FEE),ref='TRi9i-'+r.id,
  row=(l,v)=>`<div class="py-2 border-b" style="border-color:var(--bd)"><p class="mut text-sm">${l}</p><p class="font-extrabold text-lg break-all">${v}</p></div>`,
- wa=`https://wa.me/${BANK.wa}?text=${encodeURIComponent('Salam, hada l-recu dyal '+p+' DH. Reference: '+ref)}`;
- return `<div>${back('req')}<div class="card p-6 text-center"><div class="w-20 h-20 rounded-full to co mx-auto flex items-center justify-center">${ic('lock',40)}</div><h1 class="text-3xl font-extrabold mt-4">Khlles f amane</h1><div class="mt-2">${route(r.from_city,r.to_city,'text-lg justify-center')}</div><p class="text-5xl font-extrabold cg mt-4">${dh(p)}</p></div>
- <div class="card p-5 mt-4 text-[15px]"><div class="flex justify-between py-1"><span>Taman n-n9l</span><b>${dh(p-f)}</b></div><div class="flex justify-between py-1"><span>Commission TRi9i (${FEE*100}%)</span><b>${dh(f)}</b></div></div>
- <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg">1. Dir t-tahwil</h2>${row('Banque',esc(BANK.bank))}${row('Titulaire',esc(BANK.name))}${row('RIB',esc(BANK.rib))}${row('Awla',esc(BANK.cash))}${row('Reference (kteb-ha f t-tahwil)',ref)}</div>
- <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">2. Sift l-recu</h2><a class="btn g sm" href="${wa}" target="_blank" rel="noopener">${ic('chat',20)}Sift l-recu f WhatsApp</a><button class="btn b mt-3" data-act="pay">${ic('check')}Sifet t-tahwil</button></div>
- <div class="card p-4 mt-4 tb flex gap-3" style="border:0"><span class="cb">${ic('shield',26)}</span><p class="text-[15px]">L-flous kaybqaw 3and TRi9i hta t-akked l-istilam.</p></div></div>`},
+ wa=`https://wa.me/${BANK.wa}?text=${encodeURIComponent('سلام، هادا وصل ديال '+p+' درهم. المرجع: '+ref)}`;
+ return `<div>${back('req')}<div class="card p-6 text-center"><div class="w-20 h-20 rounded-full to co mx-auto flex items-center justify-center">${ic('lock',40)}</div><h1 class="text-3xl font-extrabold mt-4">خلص فأمان</h1><div class="mt-2">${route(r.from_city,r.to_city,'text-lg justify-center')}</div><p class="text-5xl font-extrabold cg mt-4">${dh(p)}</p></div>
+ <div class="card p-5 mt-4 text-[15px]"><div class="flex justify-between py-1"><span>ثمن النقل</span><b>${dh(p-f)}</b></div><div class="flex justify-between py-1"><span>كوميسيون TRi9i (${FEE*100}%)</span><b>${dh(f)}</b></div></div>
+ <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg">1. دير التحويل</h2>${row('البنك',esc(BANK.bank))}${row('صاحب الحساب',esc(BANK.name))}${row('RIB',esc(BANK.rib))}${row('ولا',esc(BANK.cash))}${row('المرجع (كتبو فالتحويل)',ref)}</div>
+ <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">2. صيفط الوصل</h2><a class="btn g sm" href="${wa}" target="_blank" rel="noopener">${ic('chat',20)}صيفط الوصل فواتساب</a><button class="btn b mt-3" data-act="pay">${ic('check')}صيفطت التحويل</button></div>
+ <div class="card p-4 mt-4 tb flex gap-3" style="border:0"><span class="cb">${ic('shield',26)}</span><p class="text-[15px]">الفلوس كيبقاو عند TRi9i حتى تأكد الاستلام.</p></div></div>`},
 
 async chat(){const r=await q(sb.from('requests').select('from_city,to_city').eq('id',S.sel).single()),M=await q(sb.from('messages').select('*').eq('request_id',S.sel).eq('driver_id',S.chatWith).order('created_at'));
- return `<div><button class="flex items-center gap-1 font-bold cb py-3 min-h-[48px]" data-open="${S.sel}">${ic('back')}Rjou3</button><div class="card p-4"><b>${esc(r.from_city)} \u2192 ${esc(r.to_city)}</b></div>
- <div class="grid gap-2 mt-4">${M.length?M.map(m=>`<div class="p-3 rounded-2xl max-w-[85%] ${m.sender_id===S.me.id?'ml-auto tg':'card'}">${esc(m.body)}</div>`).join(''):'<p class="mut text-center py-6">Bda l-hadra.</p>'}</div>
- <div class="flex gap-2 mt-4"><input id="m-text" class="inp" placeholder="Kteb risala"><button class="btn g sm" style="width:auto;padding:0 18px" data-act="send">Sift</button></div><p class="mut text-xs mt-2">Numrawat t-telifon mhjoubin hta t-tkhlas.</p></div>`},
+ return `<div><button class="flex items-center gap-1 font-bold cb py-3 min-h-[48px]" data-open="${S.sel}">${ic('back')}رجع</button><div class="card p-4"><b>${esc(r.from_city)} \u2192 ${esc(r.to_city)}</b></div>
+ <div class="grid gap-2 mt-4">${M.length?M.map(m=>`<div class="p-3 rounded-2xl max-w-[85%] ${m.sender_id===S.me.id?'ms-auto tg':'card'}">${esc(m.body)}</div>`).join(''):'<p class="mut text-center py-6">بدا الهضرة.</p>'}</div>
+ <div class="flex gap-2 mt-4"><input id="m-text" class="inp" placeholder="كتب رسالة"><button class="btn g sm" style="width:auto;padding:0 18px" data-act="send">صيفط</button></div><p class="mut text-xs mt-2">نمرات التيليفون مخبيين حتى التخلاص.</p></div>`},
 
 async settings(){await refreshMe();const m=S.me,d=m.role==='driver',tp=m.truck_photos||[],dc=m.docs||[],T=['Camionnette 3,5 t','Camion 8 t','Camion 10 t','Semi-remorque 25 t','Camion frigo'];
- return `<div>${back(home())}<h1 class="text-3xl font-extrabold mb-4">L-compte dyali</h1>
- <div class="card p-5 flex items-center gap-4">${av(m,72)}<label class="btn b sm" style="width:auto;padding:0 16px;cursor:pointer">${ic('cam',20)}Bddel s-sora<input type="file" accept="image/*" class="hidden" data-up="av"></label></div>
- <div class="grid gap-4 mt-4">${field('s-name','Smitek','Smiya kamla','text',`value="${esc(m.name)}"`)}${field('s-city','Mdinatek','Casablanca','text',`value="${esc(m.city||'')}"`)}
- ${d?`<label class="block"><span class="font-bold block mb-1.5">Noo3 d-camion</span><select id="s-truck" class="inp">${T.map(t=>`<option ${t===m.truck?'selected':''}>${t}</option>`).join('')}</select></label>${field('s-plate','Numro d-plaque','12345-A-1','text',`value="${esc(m.plate||'')}"`)}${field('s-cap','L-hamoula (tonnes awla m3)','Mital: 8 tonnes','text',`value="${esc(m.capacity||'')}"`)}`:''}
- <button class="btn g" data-act="saveprofile">${ic('check')}7ffed</button></div>
- ${d?`<div class="card p-5 mt-6"><h2 class="font-extrabold text-lg mb-1">Sowar d-camion</h2><p class="mut text-sm mb-3">Ssowar kaykhelliw l-clients yt-i9o bik. Hta 4 sowar.</p>
-  <div class="grid grid-cols-2 gap-3">${tp.map((p,i)=>`<div class="relative"><img src="${pub(p)}" alt="Sora d-camion" class="w-full h-32 object-cover rounded-2xl"><button class="absolute top-2 right-2 w-9 h-9 rounded-full text-white font-bold" style="background:#b91c1c" data-act="delphoto" data-i="${i}" aria-label="Mseh s-sora">\u2715</button></div>`).join('')}
-  ${tp.length<4?`<label class="flex flex-col items-center justify-center h-32 rounded-2xl cursor-pointer tb cb font-bold" style="border:2px dashed var(--blue)">${ic('cam',28)}Zid sora<input type="file" accept="image/*" class="hidden" data-up="truck"></label>`:''}</div></div>
- <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-1">Twtheeq l-compte</h2>${m.verified?`<p class="pill tg cg mt-1">${ic('check',14)} Compte mwathaq</p>`:`<p class="mut text-sm mb-3">Sift sora d-CIN w d-carte grise. Mnin n-tchekkdo, kayban lik "Mwathaq" w kat-ziid t-i9a.</p>
-  <p class="font-bold mb-2">${dc.length?dc.length+' watiqa mtsifta, kan-checkiw':'Mazal ma siftiti walo'}</p><label class="btn b sm" style="cursor:pointer">${ic('cam',20)}Zid watiqa<input type="file" accept="image/*" class="hidden" data-up="doc"></label>`}</div>`:''}
- <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">Kelmat s-sirr</h2><div class="grid gap-3">${field('s-pass','Kelma jdida','3la l-a9al 6 7rouf','password')}<button class="btn b sm" data-act="newpass">Bddel</button></div></div></div>`},
+ return `<div>${back(home())}<h1 class="text-3xl font-extrabold mb-4">الحساب ديالي</h1>
+ <div class="card p-5 flex items-center gap-4">${av(m,72)}<label class="btn b sm" style="width:auto;padding:0 16px;cursor:pointer">${ic('cam',20)}بدل الصورة<input type="file" accept="image/*" class="hidden" data-up="av"></label></div>
+ <div class="grid gap-4 mt-4">${field('s-name','سميتك','السمية كاملة','text',`value="${esc(m.name)}"`)}${field('s-city','المدينة ديالك','الدار البيضاء','text',`value="${esc(m.city||'')}"`)}
+ ${d?`<label class="block"><span class="font-bold block mb-1.5">نوع الكاميو</span><select id="s-truck" class="inp">${T.map(t=>`<option ${t===m.truck?'selected':''}>${t}</option>`).join('')}</select></label>${field('s-plate','نمرة الپلاك','12345-A-1','text',`value="${esc(m.plate||'')}"`)}${field('s-cap','الحمولة (طن ولا متر مكعب)','مثال: 8 طن','text',`value="${esc(m.capacity||'')}"`)}`:''}
+ <button class="btn g" data-act="saveprofile">${ic('check')}حفظ</button></div>
+ ${d?`<div class="card p-5 mt-6"><h2 class="font-extrabold text-lg mb-1">صور الكاميو</h2><p class="mut text-sm mb-3">الصور كيخليو الكليانات يوثقو فيك. حتى 4 صور.</p>
+  <div class="grid grid-cols-2 gap-3">${tp.map((p,i)=>`<div class="relative"><img src="${pub(p)}" alt="صورة الكاميو" class="w-full h-32 object-cover rounded-2xl"><button class="absolute top-2 end-2 w-9 h-9 rounded-full text-white font-bold" style="background:#b91c1c" data-act="delphoto" data-i="${i}" aria-label="مسح الصورة">\u2715</button></div>`).join('')}
+  ${tp.length<4?`<label class="flex flex-col items-center justify-center h-32 rounded-2xl cursor-pointer tb cb font-bold" style="border:2px dashed var(--blue)">${ic('cam',28)}زيد صورة<input type="file" accept="image/*" class="hidden" data-up="truck"></label>`:''}</div></div>
+ <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-1">توثيق الحساب</h2>${m.verified?`<p class="pill tg cg mt-1">${ic('check',14)} حساب موثق</p>`:`<p class="mut text-sm mb-3">صيفط صورة ديال البطاقة الوطنية والكارط گريز. من نتأكدو، كيبان ليك "موثق" وكتزيد الثقة.</p>
+  <p class="font-bold mb-2">${dc.length?dc.length+' وثيقة مصيفطة، كنتأكدو':'مازال ما صيفطتي والو'}</p><label class="btn b sm" style="cursor:pointer">${ic('cam',20)}زيد وثيقة<input type="file" accept="image/*" class="hidden" data-up="doc"></label>`}</div>`:''}
+ <div class="card p-5 mt-4"><h2 class="font-extrabold text-lg mb-3">كلمة السر</h2><div class="grid gap-3">${field('s-pass','كلمة جديدة','على الأقل 6 حروف','password')}<button class="btn b sm" data-act="newpass">بدل</button></div></div></div>`},
 async notifs(){const L=await q(sb.from('notifs').select('*').order('created_at',{ascending:false}).limit(40));await sb.from('notifs').update({read:true}).eq('user_id',S.me.id).eq('read',false);
- return `<div>${back(home())}<h1 class="text-3xl font-extrabold mb-4">Iche3arat</h1>${L.length?`<div class="grid gap-3">${L.map(x=>`<button class="row card p-4" ${x.request_id?`data-open="${x.request_id}"`:''}>${esc(x.text)}</button>`).join('')}</div>`:'<div class="card p-6 text-center mut">Ma kayn hta ichare3.</div>'}</div>`},
+ return `<div>${back(home())}<h1 class="text-3xl font-extrabold mb-4">الإشعارات</h1>${L.length?`<div class="grid gap-3">${L.map(x=>`<button class="row card p-4" ${x.request_id?`data-open="${x.request_id}"`:''}>${esc(x.text)}</button>`).join('')}</div>`:'<div class="card p-6 text-center mut">ما كاين حتى إشعار.</div>'}</div>`},
 
 async admin(){const DV=(await q(sb.from('profiles').select('*').eq('role','driver').eq('verified',false))).filter(x=>(x.docs||[]).length);for(const x of DV)x.urls=await Promise.all(x.docs.map(async p=>(await sb.storage.from('docs').createSignedUrl(p,600)).data?.signedUrl));const L=await q(sb.from('payments').select('*,r:request_id(from_city,to_city)').eq('status','pending').order('created_at')),C=await q(sb.from('requests').select('*,drv:agreed_driver(name)').eq('status','closed'));
- return `<div><h1 class="text-3xl font-extrabold mt-1 mb-4">Admin</h1><h2 class="text-xl font-extrabold mb-3">Chaffeurs bach nwathqo (${DV.length})</h2><div class="grid gap-3 mb-7">${DV.map(x=>`<div class="card p-4"><b>${esc(x.name)}</b> <span class="mut text-sm">${esc(x.truck||'')} ${esc(x.plate||'')}</span><div class="flex gap-2 mt-2 flex-wrap">${(x.urls||[]).map(u=>u?`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="Watiqa" class="w-24 h-20 object-cover rounded-lg"></a>`:'').join('')}</div><button class="btn g sm mt-3" data-act="verify" data-u="${x.id}">${ic('check',20)}Wathaq</button></div>`).join('')||'<p class="mut">Ma kayn hta talab.</p>'}</div><h2 class="text-xl font-extrabold mb-3">Tkhlas f l-intidar (${L.length})</h2>${L.length?`<div class="grid gap-3">${L.map(p=>`<div class="card p-4"><b>${esc(p.r.from_city)} \u2192 ${esc(p.r.to_city)}</b><p class="mut text-sm">Reference: TRi9i-${p.request_id}</p><p class="text-2xl font-extrabold cg">${dh(p.amount)}</p><button class="btn g sm mt-3" data-act="confirmpay" data-p="${p.id}">${ic('check',20)}Akked t-khlas</button></div>`).join('')}</div>`:'<div class="card p-5 mut text-center">Ma kayn hta khlas.</div>'}
- <h2 class="text-xl font-extrabold mt-7 mb-3">Rihlat mtamma: sift l-flous l-chaffeur</h2><div class="grid gap-2">${C.map(r=>`<div class="card p-4"><b>${esc(r.drv?.name)}</b> <span class="mut">#${r.id}</span><p class="font-extrabold">${dh(Math.round(r.agreed_price*(1-FEE)))}</p></div>`).join('')||'<p class="mut">Walo.</p>'}</div></div>`}
+ return `<div><h1 class="text-3xl font-extrabold mt-1 mb-4">الأدمن</h1><h2 class="text-xl font-extrabold mb-3">شوفورات باش نوثقو (${DV.length})</h2><div class="grid gap-3 mb-7">${DV.map(x=>`<div class="card p-4"><b>${esc(x.name)}</b> <span class="mut text-sm">${esc(x.truck||'')} ${esc(x.plate||'')}</span><div class="flex gap-2 mt-2 flex-wrap">${(x.urls||[]).map(u=>u?`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="وثيقة" class="w-24 h-20 object-cover rounded-lg"></a>`:'').join('')}</div><button class="btn g sm mt-3" data-act="verify" data-u="${x.id}">${ic('check',20)}وثق</button></div>`).join('')||'<p class="mut">ما كاين حتى طلب.</p>'}</div><h2 class="text-xl font-extrabold mb-3">تخلاصات كتسنى (${L.length})</h2>${L.length?`<div class="grid gap-3">${L.map(p=>`<div class="card p-4"><b>${esc(p.r.from_city)} \u2192 ${esc(p.r.to_city)}</b><p class="mut text-sm">المرجع: TRi9i-${p.request_id}</p><p class="text-2xl font-extrabold cg">${dh(p.amount)}</p><button class="btn g sm mt-3" data-act="confirmpay" data-p="${p.id}">${ic('check',20)}أكد التخلاص</button></div>`).join('')}</div>`:'<div class="card p-5 mut text-center">ما كاين حتى تخلاص.</div>'}
+ <h2 class="text-xl font-extrabold mt-7 mb-3">رحلات سالات: صيفط الفلوس للشوفور</h2><div class="grid gap-2">${C.map(r=>`<div class="card p-4"><b>${esc(r.drv?.name)}</b> <span class="mut">#${r.id}</span><p class="font-extrabold">${dh(Math.round(r.agreed_price*(1-FEE)))}</p></div>`).join('')||'<p class="mut">والو.</p>'}</div></div>`}
 };
 
 let RT={};
@@ -149,26 +150,26 @@ const pub=p=>sb.storage.from('photos').getPublicUrl(p).data.publicUrl;
 const refreshMe=async()=>{S.me=await q(sb.from('profiles').select('*').eq('id',S.me.id).single())};
 const av=(m,z)=>m.avatar?`<img src="${pub(m.avatar)}" alt="" class="rounded-full object-cover shrink-0" style="width:${z}px;height:${z}px">`:`<div class="rounded-full shrink-0 flex items-center justify-center font-extrabold text-white" style="width:${z}px;height:${z}px;background:#1d3f8f;font-size:${z/2.4}px">${esc((m.name||'?')[0].toUpperCase())}</div>`;
 const rates=async ids=>{ids=[...new Set(ids)];const o={};if(!ids.length)return o;(await q(sb.from('reviews').select('driver_id,stars').in('driver_id',ids))).forEach(x=>{const a=o[x.driver_id]||(o[x.driver_id]={sum:0,n:0});a.sum+=x.stars;a.n++});Object.values(o).forEach(a=>a.avg=a.sum/a.n);return o};
-const dinfo=(d,id)=>{const a=RT[id];return `<div class="flex gap-3 items-start">${av(d,48)}<div><b class="text-lg">${esc(d.name)}</b>${d.verified?` <span class="pill tg cg">${ic('check',12)} Mwathaq</span>`:''}<p class="mut text-sm">${esc(d.truck||'')}${d.capacity?' \u00b7 '+esc(d.capacity):''}${d.city?' \u00b7 '+esc(d.city):''}</p><p class="text-sm">${a?`<span class="co font-bold">\u2605 ${a.avg.toFixed(1)}</span> <span class="mut text-xs">(${a.n})</span>`:'<span class="mut text-xs">Jdid</span>'}</p>${(d.truck_photos||[]).length?`<div class="flex gap-1 mt-2">${d.truck_photos.slice(0,3).map(p=>`<img src="${pub(p)}" alt="Camion" class="w-16 h-12 object-cover rounded-lg">`).join('')}</div>`:''}</div></div>`};
+const dinfo=(d,id)=>{const a=RT[id];return `<div class="flex gap-3 items-start">${av(d,48)}<div><b class="text-lg">${esc(d.name)}</b>${d.verified?` <span class="pill tg cg">${ic('check',12)} موثق</span>`:''}<p class="mut text-sm">${esc(d.truck||'')}${d.capacity?' \u00b7 '+esc(d.capacity):''}${d.city?' \u00b7 '+esc(d.city):''}</p><p class="text-sm">${a?`<span class="co font-bold">\u2605 ${a.avg.toFixed(1)}</span> <span class="mut text-xs">(${a.n})</span>`:'<span class="mut text-xs">جديد</span>'}</p>${(d.truck_photos||[]).length?`<div class="flex gap-1 mt-2">${d.truck_photos.slice(0,3).map(p=>`<img src="${pub(p)}" alt="Camion" class="w-16 h-12 object-cover rounded-lg">`).join('')}</div>`:''}</div></div>`};
 async function head(){const w=document.getElementById('who');if(!S.me){w.innerHTML='';return}
  const {count}=await sb.from('notifs').select('id',{count:'exact',head:true}).eq('read',false),n=count||0;
- w.innerHTML=`<span class="pill ${S.me.role==='driver'?'tb cb':'to co'}">${{shipper:'Client',driver:'Chaffeur',admin:'Admin'}[S.me.role]}</span><button class="relative p-2.5 rounded-xl tb cb min-w-[44px] min-h-[44px] flex items-center justify-center" data-go="notifs" aria-label="Iche3arat">${ic('bell',20)}${n?`<span class="absolute -top-1 -right-1 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" style="background:#d9640f">${n}</span>`:''}</button><button class="p-2.5 rounded-xl tb cb min-w-[44px] min-h-[44px] flex items-center justify-center" data-go="settings" aria-label="L-compte dyali">${ic('user',20)}</button><button class="p-2.5 rounded-xl tg cg min-w-[44px] min-h-[44px] flex items-center justify-center" data-act="logout" aria-label="Khrej">${ic('out',20)}</button>`}
+ w.innerHTML=`<span class="pill ${S.me.role==='driver'?'tb cb':'to co'}">${{shipper:'كليان',driver:'شوفور',admin:'أدمن'}[S.me.role]}</span><button class="relative p-2.5 rounded-xl tb cb min-w-[44px] min-h-[44px] flex items-center justify-center" data-go="notifs" aria-label="الإشعارات">${ic('bell',20)}${n?`<span class="absolute -top-1 -end-1 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" style="background:#d9640f">${n}</span>`:''}</button><button class="p-2.5 rounded-xl tb cb min-w-[44px] min-h-[44px] flex items-center justify-center" data-go="settings" aria-label="الحساب ديالي">${ic('user',20)}</button><button class="p-2.5 rounded-xl tg cg min-w-[44px] min-h-[44px] flex items-center justify-center" data-act="logout" aria-label="خروج">${ic('out',20)}</button>`}
 async function render(){try{$.innerHTML=await V[S.view]()}catch(e){console.error(e)}await head()}
 const go=(v,x={})=>{Object.assign(S,x,{view:v});render();window.scrollTo(0,0)};
 
 async function load(uid){S.me=await q(sb.from('profiles').select('*').eq('id',uid).single());go(home())}
 async function act(a,t){const g=id=>(document.getElementById(id)||{}).value||'';const n=id=>+g(id);
- if(a==='signup'){const name=g('a-name').trim(),ph=g('a-phone'),pw=g('a-pass');if(!name||ph.replace(/\D/g,'').length<9||pw.length<6)return toast('Kmmel l-ma3louimat (numro s7i7, kelma 6 7rouf).');
-  const {data,error}=await sb.auth.signUp({email:em(ph),password:pw});if(error)return toast(error.message);if(!data.session)return toast('Dir Confirm email = OFF f Supabase (Authentication > Providers > Email).');
+ if(a==='signup'){const name=g('a-name').trim(),ph=g('a-phone'),pw=g('a-pass');if(!name||ph.replace(/\D/g,'').length<9||pw.length<6)return toast('كمل المعلومات (نمرة صحيحة، كلمة سر 6 حروف).');
+  const {data,error}=await sb.auth.signUp({email:em(ph),password:pw});if(error)return toast(error.message);if(!data.session)return toast('دير Confirm email = OFF فـ Supabase (Authentication > Providers > Email).');
   const uid=data.user.id;await q(sb.from('profiles').insert({id:uid,role:S.pick,name,truck:S.pick==='driver'?g('a-truck'):null}));await q(sb.from('private_phones').insert({user_id:uid,phone:ph.trim()}));return load(uid);}
- if(a==='login'){const {data,error}=await sb.auth.signInWithPassword({email:em(g('a-phone')),password:g('a-pass')});if(error)return toast('Numro awla kelmat s-sirr ghalat.');return load(data.user.id);}
- if(a==='saveprofile'){const u={name:g('s-name').trim(),city:g('s-city').trim()};if(S.me.role==='driver'){u.truck=g('s-truck');u.plate=g('s-plate').trim();u.capacity=g('s-cap').trim()}if(!u.name)return toast('Kteb smitek.');await q(sb.from('profiles').update(u).eq('id',S.me.id));await refreshMe();toast('Tssjjel!',1);return render();}
- if(a==='newpass'){const p=g('s-pass');if(p.length<6)return toast('6 7rouf 3la l-a9al.');const {error}=await sb.auth.updateUser({password:p});return error?toast(error.message):toast('Tbddlat kelmat s-sirr.',1);}
+ if(a==='login'){const {data,error}=await sb.auth.signInWithPassword({email:em(g('a-phone')),password:g('a-pass')});if(error)return toast('النمرة ولا كلمة السر غالطين.');return load(data.user.id);}
+ if(a==='saveprofile'){const u={name:g('s-name').trim(),city:g('s-city').trim()};if(S.me.role==='driver'){u.truck=g('s-truck');u.plate=g('s-plate').trim();u.capacity=g('s-cap').trim()}if(!u.name)return toast('كتب سميتك.');await q(sb.from('profiles').update(u).eq('id',S.me.id));await refreshMe();toast('تسجل!',1);return render();}
+ if(a==='newpass'){const p=g('s-pass');if(p.length<6)return toast('6 حروف على الأقل.');const {error}=await sb.auth.updateUser({password:p});return error?toast(error.message):toast('تبدلات كلمة السر.',1);}
  if(a==='delphoto'){const tp=[...S.me.truck_photos],[p]=tp.splice(+t.dataset.i,1);await q(sb.from('profiles').update({truck_photos:tp}).eq('id',S.me.id));await sb.storage.from('photos').remove([p]);await refreshMe();return render();}
  if(a==='rate'){const r=await q(sb.from('requests').select('agreed_driver').eq('id',S.sel).single());await q(sb.from('reviews').insert({request_id:S.sel,driver_id:r.agreed_driver,stars:+t.dataset.s}));return render();}
  if(a==='verify'){await q(sb.rpc('set_verified',{uid:t.dataset.u,v:true}));return render();}
  if(a==='logout'){await sb.auth.signOut();S.me=null;return go('auth');}
- if(a==='publish'){const d={from_city:g('n-from').trim(),to_city:g('n-to').trim(),what:g('n-what').trim(),budget:n('n-bud')},ad=g('n-addr').trim();if(!d.from_city||!d.to_city||!d.what||!(d.budget>0)||!ad)return toast('3emmer ga3 l-khanat.');
+ if(a==='publish'){const d={from_city:g('n-from').trim(),to_city:g('n-to').trim(),what:g('n-what').trim(),budget:n('n-bud')},ad=g('n-addr').trim();if(!d.from_city||!d.to_city||!d.what||!(d.budget>0)||!ad)return toast('عمر كاع الخانات.');
   const r=await q(sb.from('requests').insert(d).select().single());await q(sb.from('request_private').insert({request_id:r.id,addr:ad}));return go('req',{sel:r.id});}
  if(a==='offer'){const p=n('o-price');if(!(p>0))return;await q(sb.from('offers').insert({request_id:S.sel,driver_id:S.me.id,by_role:'driver',price:p}));return render();}
  if(a==='counter'){const p=n('c-'+t.dataset.o);if(!(p>0))return;await q(sb.from('offers').insert({request_id:S.sel,driver_id:t.dataset.d,by_role:'shipper',price:p}));return render();}
@@ -187,11 +188,11 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-go],[data-
  if(t.dataset.open)return go('req',{sel:+t.dataset.open});
  if(t.dataset.go)return go(t.dataset.go==='sh'||t.dataset.go==='dr'||t.dataset.go==='admin'?home():t.dataset.go);
  act(t.dataset.act,t).catch(console.error);});
-document.addEventListener('change',async e=>{const k=e.target.dataset.up,f=e.target.files&&e.target.files[0];if(!k||!f)return;try{toast('Kan-tle3 s-sora...',1);const m=S.me;
+document.addEventListener('change',async e=>{const k=e.target.dataset.up,f=e.target.files&&e.target.files[0];if(!k||!f)return;try{toast('كنطلعو الصورة...',1);const m=S.me;
  if(k==='av'){const p=await upload('photos',f);await q(sb.from('profiles').update({avatar:p}).eq('id',m.id))}
  if(k==='truck'){const p=await upload('photos',f);await q(sb.from('profiles').update({truck_photos:[...(m.truck_photos||[]),p]}).eq('id',m.id))}
  if(k==='doc'){const p=await upload('docs',f);await q(sb.from('profiles').update({docs:[...(m.docs||[]),p]}).eq('id',m.id))}
- await refreshMe();toast('Tle3at!',1);render()}catch(x){console.error(x)}});
+ await refreshMe();toast('طلعات!',1);render()}catch(x){console.error(x)}});
 setInterval(()=>{const a=document.activeElement;if(!S.me||S.view==='settings'||(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)))return;render()},10000);
 sb.auth.getSession().then(({data})=>data.session?load(data.session.user.id):render());
 </script>
