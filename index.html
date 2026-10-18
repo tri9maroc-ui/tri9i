@@ -207,8 +207,8 @@ async function load(uid){S.me=await q(sb.from('profiles').select('*').eq('id',ui
 async function act(a,t){const g=id=>(document.getElementById(id)||{}).value||'';const n=id=>+g(id);
  if(a==='signup'){const name=g('a-name').trim(),ph=g('a-phone'),pw=g('a-pass');if(!name||ph.replace(/\D/g,'').length<9||pw.length<6)return toast('كمل المعلومات (نمرة صحيحة، كلمة سر 6 حروف).');
   const {data,error}=await sb.auth.signUp({email:em(ph),password:pw});if(error)return toast(error.message);if(!data.session)return toast('دير Confirm email = OFF فـ Supabase (Authentication > Providers > Email).');
-  const uid=data.user.id;await q(sb.from('profiles').insert({id:uid,role:S.pick,name,truck:S.pick==='driver'?g('a-truck'):null}));await q(sb.from('private_phones').insert({user_id:uid,phone:ph.trim()}));return load(uid);}
- if(a==='login'){const {data,error}=await sb.auth.signInWithPassword({email:em(g('a-phone')),password:g('a-pass')});if(error)return toast('النمرة ولا كلمة السر غالطين.');try{localStorage.setItem('tri9i_phone',g('a-phone'))}catch(e){}return load(data.user.id);}
+  const uid=data.user.id;try{await q(sb.from('profiles').insert({id:uid,role:S.pick,name,truck:S.pick==='driver'?g('a-truck'):null}));await q(sb.from('private_phones').insert({user_id:uid,phone:ph.trim()}))}catch(e){await sb.auth.signOut();return}return load(uid);}
+ if(a==='login'){const {data,error}=await sb.auth.signInWithPassword({email:em(g('a-phone')),password:g('a-pass')});if(error)return toast('النمرة ولا كلمة السر غالطين.');try{localStorage.setItem('tri9i_phone',g('a-phone'))}catch(e){}try{return await load(data.user.id)}catch(e){await sb.auth.signOut();S.me=null;go('auth')}}
  if(a==='saveprofile'){const u={name:g('s-name').trim(),city:g('s-city').trim()};if(S.me.role==='driver'){u.truck=g('s-truck');u.plate=g('s-plate').trim();u.capacity=g('s-cap').trim()}if(!u.name)return toast('كتب سميتك.');await q(sb.from('profiles').update(u).eq('id',S.me.id));await refreshMe();toast('تسجل!',1);return render();}
  if(a==='newpass'){const p=g('s-pass');if(p.length<6)return toast('6 حروف على الأقل.');const {error}=await sb.auth.updateUser({password:p});return error?toast(error.message):toast('تبدلات كلمة السر.',1);}
  if(a==='delphoto'){const tp=[...S.me.truck_photos],[p]=tp.splice(+t.dataset.i,1);await q(sb.from('profiles').update({truck_photos:tp}).eq('id',S.me.id));await sb.storage.from('photos').remove([p]);await refreshMe();return render();}
@@ -258,7 +258,7 @@ document.addEventListener('change',async e=>{const z=e.target.dataset.wz;if(z){i
 setInterval(()=>{const a=document.activeElement;if(!S.me||S.view==='settings'||document.hidden||(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)))return;render()},20000);
 (()=>{const h=document.getElementById('help');h.href='https://wa.me/'+BANK.wa+'?text='+encodeURIComponent('سلام، بغيت مساعدة فـ TRi9i');h.innerHTML=ic('chat',22)+'مساعدة'})();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-sb.auth.getSession().then(({data})=>data.session?load(data.session.user.id):render());
+sb.auth.getSession().then(async({data})=>{if(!data.session)return render();try{await load(data.session.user.id)}catch(e){console.error(e);await sb.auth.signOut();S.me=null;go('auth')}}).catch(e=>{console.error(e);render()});
 </script>
 </body>
 </html>
