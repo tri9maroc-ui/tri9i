@@ -1,6 +1,6 @@
 // TRi9i service worker: instant repeat loads + works offline for the app shell.
 // Bump VERSION when you change this file's caching rules.
-const VERSION = 'tri9i-v2';
+const VERSION = 'tri9i-v3';
 const SHELL = ['./', 'index.html', 'tailwind.css', 'manifest.json', 'icon-192.png', 'icon-512.png'];
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
